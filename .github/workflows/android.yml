@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y libffi-dev libssl-dev build-essential \
+                              libsqlite3-dev libjpeg-dev zlib1g-dev \
+                              python3-pip git zip unzip openjdk-8-jdk
+          pip install --upgrade pip
+          pip install cython virtualenv
+
+      - name: Set up Buildozer
+        run: |
+          pip install buildozer
+          buildozer init || true
+
+      - name: Build APK
+        run: |
+          buildozer android debug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: harry-potter-maze-apk
+          path: bin/*.apk
