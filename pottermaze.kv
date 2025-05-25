@@ -1,0 +1,105 @@
+#:import Window kivy.core.window.Window
+
+<LoginScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        Label:
+            text: 'Harry Potter Maze Login'
+            font_size: 24
+            size_hint_y: None
+            height: 50
+
+        TextInput:
+            id: username
+            hint_text: 'Username'
+            multiline: False
+
+        TextInput:
+            id: password
+            hint_text: 'Password'
+            multiline: False
+            password: True
+
+        Button:
+            text: 'Login'
+            on_press: root.login(username.text, password.text)
+
+        Button:
+            text: 'Register'
+            on_press: root.register(username.text, password.text)
+
+        Label:
+            id: status
+            text: ''
+            color: 1, 0, 0, 1
+
+<GameScreen>:
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 0.1, 0.1, 0.1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            id: info
+            text: 'XP: 0 | Kills: 0'
+            size_hint: None, None
+            size: self.texture_size
+            pos: 10, Window.height - 40
+            color: 1, 1, 1, 1
+
+        # Spell Buttons (bottom right)
+        Button:
+            text: 'Avada'
+            size_hint: None, None
+            size: 80, 40
+            pos: Window.width - 90, 120
+            on_press: root.cast_spell('avada')
+
+        Button:
+            text: 'Expelliarmus'
+            size_hint: None, None
+            size: 120, 40
+            pos: Window.width - 130, 70
+            on_press: root.cast_spell('expelliarmus')
+
+        Button:
+            text: 'Patronum'
+            size_hint: None, None
+            size: 100, 40
+            pos: Window.width - 110, 20
+            on_press: root.cast_spell('patronum')
+
+        Button:
+            text: 'Totalus'
+            size_hint: None, None
+            size: 90, 40
+            pos: Window.width - 100, 170
+            on_press: root.cast_spell('totalus')
+
+        Button:
+            text: 'Sprint'
+            size_hint: None, None
+            size: 80, 40
+            pos: Window.width - 90, 220
+            on_press: root.cast_spell('sprint')
+
+        Button:
+            text: 'Shield'
+            size_hint: None, None
+            size: 80, 40
+            pos: Window.width - 90, 270
+            on_press: root.cast_spell('shield')
+
+        # Joystick placeholder
+        Label:
+            text: '← ↑ ↓ →'
+            pos: 20, 20
+            size_hint: None, None
+            size: 100, 100
+            color: 1, 1, 1, 1
